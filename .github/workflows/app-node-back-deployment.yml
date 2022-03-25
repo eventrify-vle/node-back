@@ -1,16 +1,5 @@
-name: Trigger auto deployment for containerapps
-
-# When this action will be executed
-on:
-  # Automatically trigger it when detected changes in repo
-  push:
-    branches: 
-      [ master ]
-    paths:
-    - './**'
-
-  # Allow mannually trigger 
-  workflow_dispatch:      
+on: [push]
+name: node-back deployment
 
 jobs:
   build:
@@ -34,7 +23,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: emplregistry.azurecr.io/app-node-back:${{ github.sha }}
+          tags: emplregistry.azurecr.io/node-back:${{ github.sha }}
           context: ./
 
 
@@ -56,4 +45,4 @@ jobs:
             echo "Installing containerapp extension"
             az extension add --source https://workerappscliextension.blob.core.windows.net/azure-cli-extension/containerapp-0.2.0-py2.py3-none-any.whl --yes
             echo "Starting Deploying"
-            az containerapp update -n app-node-back -g node-test -i emplregistry.azurecr.io/app-node-back:${{ github.sha }} --registry-login-server emplregistry.azurecr.io --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --debug
+            az containerapp update -n app-node-back -g node-test -i emplregistry.azurecr.io/node-back:${{ github.sha }} --registry-login-server emplregistry.azurecr.io --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --debug
