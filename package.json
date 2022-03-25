@@ -7,7 +7,7 @@
     "build": "rimraf ./dist && tsc -p .",
     "start": "npm run build && node dist/index.js",
     "start:dev": "npm run build && nodemon --ext \".ts,.js\" --watch \"./src\" --exec \"ts-node ./src/index.ts\"",
-    "start:dapr": "dapr run --app-id node-back --app-port 50051 --app-protocol grpc --dapr-grpc-port 50050 npm run start"
+    "start:dapr": "dapr run --app-id node-back --app-port 50051 --app-protocol http --dapr-http-port 50050 npm run start"
   },
   "keywords": [],
   "author": "",
